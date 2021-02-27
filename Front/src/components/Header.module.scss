@@ -1,0 +1,33 @@
+$light: #777;
+$dark: #333;
+
+.headerText {
+  color: $dark
+}
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: row;
+
+  a {
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 300ms;
+    color: $light;
+    padding: .5rem .75rem;
+
+    &:hover {
+      text-decoration: none;
+      color: $dark
+    }
+  }
+
+  li {
+    margin: 0 .5rem;
+  }
+
+}
