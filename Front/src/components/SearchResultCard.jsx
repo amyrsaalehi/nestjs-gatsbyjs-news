@@ -1,17 +1,16 @@
-import { Link } from "gatsby"
-import React, { useState, useEffect } from "react"
-import Card from "@material-ui/core/Card"
-import CardActionArea from "@material-ui/core/CardActionArea"
-import CardActions from "@material-ui/core/CardActions"
-import CardContent from "@material-ui/core/CardContent"
-import CardMedia from "@material-ui/core/CardMedia"
-import Button from "@material-ui/core/Button"
-import Typography from "@material-ui/core/Typography"
-import { Grid } from "@material-ui/core"
-import { StarBorder, Star } from "@material-ui/icons"
+import React, { useState, useEffect } from "react";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { Grid } from "@material-ui/core";
+import { StarBorder, Star } from "@material-ui/icons";
 
-import searchResultCardStyles from "./SearchResultCard.module.scss"
-import axios from "axios"
+import searchResultCardStyles from "./SearchResultCard.module.scss";
+import axios from "axios";
 
 function SearchResultCard({
   id,
@@ -26,9 +25,9 @@ function SearchResultCard({
   content,
   as,
 }) {
-  const [isFavorate, setIsFavorate] = useState(false)
+  const [isFavorate, setIsFavorate] = useState(false);
 
-  const handleAddToFavorates = e => {
+  const handleAddToFavorates = (e) => {
     axios
       .post(
         "http://localhost:3000/news/favorate",
@@ -48,24 +47,24 @@ function SearchResultCard({
           },
         }
       )
-      .then(data => {
-        setIsFavorate(true)
-      })
-  }
+      .then((data) => {
+        setIsFavorate(true);
+      });
+  };
 
-  const handleRemoveFromFavorates = e => {
-    axios.delete(`http://localhost:3000/news/favorate/${id}`).then(data => {
-      setIsLoading(true)
-    })
-  }
+  const handleRemoveFromFavorates = (e) => {
+    axios.delete(`http://localhost:3000/news/favorate/${id}`).then((data) => {
+      setIsLoading(true);
+    });
+  };
 
   useEffect(() => {
     if (as === "favorate") {
-      setIsFavorate(true)
+      setIsFavorate(true);
     } else {
-      setIsFavorate(false)
+      setIsFavorate(false);
     }
-  }, [as])
+  }, [as]);
 
   return (
     <Card className={searchResultCardStyles.rootCard}>
@@ -79,7 +78,7 @@ function SearchResultCard({
         />
         <CardContent>
           <Grid container>
-            <Grid item xs={12} style={{ marginBottom: 10 }}>
+            <Grid item xs={12} className={searchResultCardStyles.mtContainer}>
               <Typography
                 gutterBottom
                 variant="h5"
@@ -89,10 +88,15 @@ function SearchResultCard({
                 {title}
               </Typography>
             </Grid>
-            <Grid item xs={12} style={{ marginBottom: 10 }}>
+            <Grid item xs={12} className={searchResultCardStyles.mtContainer}>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
-                  <Typography variant="subtitle1" color="primary" component="p" align="justify">
+                  <Typography
+                    variant="subtitle1"
+                    color="primary"
+                    component="p"
+                    align="justify"
+                  >
                     {author.split(",")[0]}
                   </Typography>
                 </Grid>
@@ -104,18 +108,15 @@ function SearchResultCard({
                     component="p"
                     align="right"
                     display="block"
-                    style={{ marginRight: "1rem" }}
+                    className={searchResultCardStyles.mrTypography}
                   >
                     {source}
                   </Typography>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12} style={{ marginBottom: 10 }}>
-              <p
-                style={{color: '#666', textAlign: 'justify'}}
-                dangerouslySetInnerHTML={{ __html: description }}
-              ></p>
+            <Grid item xs={12} className={searchResultCardStyles.mtContainer}>
+              <p dangerouslySetInnerHTML={{ __html: description }}></p>
             </Grid>
             <Grid item xs={12}>
               <Typography
@@ -124,7 +125,7 @@ function SearchResultCard({
                 component="p"
                 align="right"
                 display="block"
-                style={{ marginRight: "1rem" }}
+                className={searchResultCardStyles.mrTypography}
               >
                 {date.replace("T", " ").slice(0, 16)}
               </Typography>
@@ -134,7 +135,7 @@ function SearchResultCard({
       </CardActionArea>
       <CardActions>
         <Grid container justify="space-between">
-          <Button style={{ paddingLeft: "1rem" }} size="small" color="primary">
+          <Button className={searchResultCardStyles.plButton} size="small" color="primary">
             <a target="_blank" href={link}>
               Read More
             </a>
@@ -149,7 +150,7 @@ function SearchResultCard({
         </Grid>
       </CardActions>
     </Card>
-  )
+  );
 }
 
-export default SearchResultCard
+export default SearchResultCard;

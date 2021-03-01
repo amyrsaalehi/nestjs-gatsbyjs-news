@@ -1,49 +1,43 @@
-import React, { useState, useEffect } from "react"
-import { Grid } from "@material-ui/core"
-import axios from "axios"
+import React, { useState, useEffect } from "react";
+import { Grid } from "@material-ui/core";
+import axios from "axios";
 
-import Layout from "../layouts/Layout"
-import SearchResultCard from "../components/SearchResultCard"
+import Layout from "../layouts/Layout";
+import SearchResultCard from "../components/SearchResultCard";
+
+import favoratesStyles from "./favorates.module.scss";
 
 function Favorates() {
-  const [favorateNews, setFavorateNews] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [favorateNews, setFavorateNews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
     if (isLoading) {
       await axios
         .get("http://localhost:3000/news/favorate")
-        .then(data => {
-          setFavorateNews(data.data)
+        .then((data) => {
+          setFavorateNews(data.data);
         })
-        .catch(err => {
-          setIsLoading(false)
-        })
+        .catch((err) => {
+          setIsLoading(false);
+        });
     }
-    await setIsLoading(false)
-  }
+    await setIsLoading(false);
+  };
 
   useEffect(() => {
-    fetchData()
-  }, [isLoading])
+    fetchData();
+  }, [isLoading]);
 
   return (
     <Layout title="Favorates">
       <Grid container>
         {isLoading ? (
           <Grid item xs={12}>
-            <p
-              style={{
-                textAlign: "center",
-                marginTop: "4rem",
-                marginRight: "1.5rem",
-              }}
-            >
-              Loading
-            </p>
+            <p className={favoratesStyles.paragraph}>Loading</p>
           </Grid>
         ) : favorateNews?.length !== 0 ? (
-          favorateNews.map(item => (
+          favorateNews.map((item) => (
             <Grid item xs={12} md={6} key={item._id}>
               <SearchResultCard
                 id={item._id}
@@ -62,20 +56,12 @@ function Favorates() {
           ))
         ) : (
           <Grid item xs={12}>
-            <p
-              style={{
-                textAlign: "center",
-                marginTop: "4rem",
-                marginRight: "1.5rem",
-              }}
-            >
-              No Favorates
-            </p>
+            <p className={favoratesStyles.paragraph}>No Favorates</p>
           </Grid>
         )}
       </Grid>
     </Layout>
-  )
+  );
 }
 
-export default Favorates
+export default Favorates;

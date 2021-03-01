@@ -10,7 +10,7 @@ function Header() {
       container
       justify="space-between"
       alignItems="center"
-      style={{ borderBottom: "1px solid #999", position: 'sticky', top: 0, zIndex: 2, backgroundColor: '#fff' }}
+      className={headerStyles.rootContainer}
     >
       <Grid item>
         <h1 className={headerStyles.headerText}>News Feed</h1>

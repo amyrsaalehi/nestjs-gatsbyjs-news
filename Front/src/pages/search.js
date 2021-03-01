@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from "react"
-import { Grid, TextField, InputAdornment, Button } from "@material-ui/core"
-import { Pageview } from "@material-ui/icons"
-import axios from "axios"
+import React, { useState, useEffect } from "react";
+import { Grid, TextField, InputAdornment, Button } from "@material-ui/core";
+import { Pageview } from "@material-ui/icons";
+import axios from "axios";
 
-import Layout from "../layouts/Layout"
-import SearchResultCard from "../components/SearchResultCard"
+import Layout from "../layouts/Layout";
+import SearchResultCard from "../components/SearchResultCard";
+
+import searchStyles from "./search.module.scss";
 
 function Search() {
-  const [searchValue, setSearchValue] = useState("")
-  const [searchResult, setSearchResult] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('');
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const submitForm = e => {
-    e.preventDefault()
-    setIsLoading(true)
-  }
+  const submitForm = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+  };
 
   const fetchResults = async () => {
     if (isLoading) {
@@ -26,39 +28,40 @@ function Search() {
               title: searchValue,
             },
           })
-          .then(data => {
-            data.data.articles.map(article => {
+          .then((data) => {
+            data.data.articles.map((article) => {
               if (article.urlToImage && article.author)
-                setSearchResult(prevState => [...prevState, article])
-            })
-          }).catch(err => {
-            setIsLoading(false)
-            setError(err)
+                setSearchResult((prevState) => [...prevState, article]);
+            });
           })
+          .catch((err) => {
+            setIsLoading(false);
+            setError(err);
+          });
       } else {
-        await setSearchResult([])
+        await setSearchResult([]);
       }
     }
-    await setIsLoading(false)
-  }
+    await setIsLoading(false);
+  };
 
   useEffect(() => {
     fetchResults();
-  }, [isLoading])
+  }, [isLoading]);
 
   return (
     <Layout title="Search">
       <Grid container justify="center">
-        <Grid item xs={12} md={8} style={{ marginTop: "2rem" }}>
+        <Grid item xs={12} md={8} className={searchStyles.root}>
           <form
             onSubmit={submitForm}
-            style={{ display: "flex", flexWrap: "nowrap" }}
+            className={searchStyles.form}
           >
             <TextField
-              style={{ width: "80%" }}
+              className={searchStyles.textField}
               label="Search"
               value={searchValue}
-              onChange={e => setSearchValue(e.target.value)}
+              onChange={(e) => setSearchValue(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -72,7 +75,7 @@ function Search() {
               color="primary"
               type="submit"
               size="small"
-              style={{ marginTop: 15, marginLeft: 10 }}
+              className={searchStyles.btn}
             >
               SEARCH
             </Button>
@@ -82,30 +85,14 @@ function Search() {
           <Grid container>
             {isLoading ? (
               <Grid item xs={12}>
-                <p
-                  style={{
-                    textAlign: "center",
-                    marginTop: "4rem",
-                    marginRight: "1.5rem",
-                  }}
-                >
-                  Loading
-                </p>
+                <p className={searchStyles.paragraph}>Loading</p>
               </Grid>
             ) : error ? (
               <Grid item xs={12}>
-                <p
-                  style={{
-                    textAlign: "center",
-                    marginTop: "4rem",
-                    marginRight: "1.5rem",
-                  }}
-                >
-                  {error}
-                </p>
+                <p className={searchStyles.paragraph}>{error}</p>
               </Grid>
-            ): searchResult.length ? (
-              searchResult.map(item => (
+            ) : searchResult.length ? (
+              searchResult.map((item) => (
                 <Grid item xs={12} md={6} key={item.url}>
                   <SearchResultCard
                     title={item.title}
@@ -122,22 +109,14 @@ function Search() {
               ))
             ) : (
               <Grid item xs={12}>
-                <p
-                  style={{
-                    textAlign: "center",
-                    marginTop: "4rem",
-                    marginRight: "1.5rem",
-                  }}
-                >
-                  No Content There
-                </p>
+                <p className={searchStyles.paragraph}>No Content There</p>
               </Grid>
             )}
           </Grid>
         </Grid>
       </Grid>
     </Layout>
-  )
+  );
 }
 
-export default Search
+export default Search;

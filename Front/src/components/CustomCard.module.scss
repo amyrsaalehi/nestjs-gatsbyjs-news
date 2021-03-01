@@ -2,3 +2,9 @@
   box-shadow: 15px 15px 7px #aaaaaa !important;
   margin: 3rem;
 }
+
+.cardActions {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem
+}

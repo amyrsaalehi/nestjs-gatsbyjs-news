@@ -47,7 +47,7 @@ export default function CustomCard({
               </Typography>
             </CardContent>
           </CardActionArea>
-          <CardActions style={{ display: "flex", justifyContent: "flex-end", paddingRight: '2rem' }}>
+          <CardActions className={customCardStyles.cardActions}>
             <Button
               size="small"
               color="primary"
